@@ -19,7 +19,6 @@ namespace LambdaTestDemo
             ltOptions.Add("resolution", "1024x768");
             ltOptions.Add("network", true);
             ltOptions.Add("project", "Selenium c#");
-           // ltOptions.Add("tunnel", true);
             ltOptions.Add("w3c", true);
             ltOptions.Add("plugin", "c#-nunit");
 
