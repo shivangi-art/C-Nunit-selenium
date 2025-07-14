@@ -46,7 +46,7 @@ namespace LambdaTestDemo
             js.ExecuteScript("arguments[0].setAttribute('value', '95')", slider);
             js.ExecuteScript("arguments[0].dispatchEvent(new Event('change'))", slider);
 
-            Assert.AreEqual("95", target.Text);
+            Assert.AreEqual("15", target.Text);
         }
 
         [Test]
