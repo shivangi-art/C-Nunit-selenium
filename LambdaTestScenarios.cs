@@ -43,7 +43,7 @@ namespace LambdaTestDemo
 
             // move slider with JS
             IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-            js.ExecuteScript("arguments[0].setAttribute('value', '15')", slider);
+            js.ExecuteScript("arguments[0].setAttribute('value', '95')", slider);
             js.ExecuteScript("arguments[0].dispatchEvent(new Event('change'))", slider);
 
             Assert.AreEqual("15", target.Text);
