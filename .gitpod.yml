@@ -1,0 +1,21 @@
+# .gitpod.yml
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Setup
+    init: |
+      # Install dependencies
+      dotnet restore
+    command: |
+      # Build the project
+      dotnet build
+
+ports:
+  - port: 5000
+    onOpen: ignore
+
+vscode:
+  extensions:
+    - ms-dotnettools.csharp
+
