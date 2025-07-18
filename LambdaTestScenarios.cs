@@ -55,32 +55,46 @@ namespace LambdaTestDemo
             driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground");
             driver.FindElement(By.LinkText("Input Form Submit")).Click();
 
-            var submit = driver.FindElement(By.CssSelector("button[type='submit']"));
-            submit.Click();
+           WebDriverWait _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(Convert.ToInt16(10)));
+           IWebElement formDemoElement = _wait.Until(driver =>
+           driver.FindElement(By.XPath("//*[contains(text(),'Form Demo')]"))
+        ); 
 
-            // Assert a required field is shown
-            var nameField = driver.FindElement(By.Name("name"));
-            Assert.AreEqual("true", nameField.GetAttribute("required"));
+          IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+          js.ExecuteScript("window.scrollBy(0, 500);");
 
-            // Fill all fields
-            driver.FindElement(By.Name("name")).SendKeys("John Doe");
-            driver.FindElement(By.Name("email")).SendKeys("john@example.com");
-            driver.FindElement(By.Name("company")).SendKeys("LambdaTest");
-            driver.FindElement(By.Name("website")).SendKeys("https://example.com");
-            driver.FindElement(By.Name("city")).SendKeys("San Francisco");
-            driver.FindElement(By.Name("address1")).SendKeys("123 Test St");
-            driver.FindElement(By.Name("address2")).SendKeys("Suite 456");
-            driver.FindElement(By.Name("state")).SendKeys("California");
-            driver.FindElement(By.Name("zip")).SendKeys("94105");
+          var submit = driver.FindElement(By.XPath("//*[contains(text(),'Submit')]"));
+          submit.Click();
+        // Assert a required field is shown
+          var nameField = driver.FindElement(By.Name("name"));
+          Assert.AreEqual("true", nameField.GetAttribute("required"));
 
-            var countrydropdown = driver.FindElement(By.Name("country"));
-            var selectcountry = new SelectElement(countrydropdown);
-            selectcountry.SelectByText("united states");
+          // Wait for the form field to be available
+          js.ExecuteScript("window.scrollBy(0, -500);");
+          _wait.Until(driver => driver.FindElement(By.Name("name")).Displayed);
 
-            submit.Click();
 
-            var success = driver.FindElement(By.CssSelector(".success-msg"));
-            Assert.IsTrue(success.Text.Contains("Thanks for contacting us, we will get back to you shortly."));
+           // Fill all fields
+        driver.FindElement(By.Name("name")).SendKeys("John Doe");
+        driver.FindElement(By.CssSelector("#inputEmail4")).SendKeys("john@example.com");
+        driver.FindElement(By.CssSelector("#inputPassword4")).SendKeys("12345");
+        driver.FindElement(By.Name("company")).SendKeys("LambdaTest");
+        driver.FindElement(By.Name("website")).SendKeys("https://example.com");
+        driver.FindElement(By.Name("city")).SendKeys("San Francisco");
+        driver.FindElement(By.Name("address_line1")).SendKeys("123 Test St");
+        driver.FindElement(By.Name("address_line2")).SendKeys("Suite 456");
+        driver.FindElement(By.CssSelector("#inputState")).SendKeys("California");
+        driver.FindElement(By.Name("zip")).SendKeys("94105");
+
+        var countrydropdown = driver.FindElement(By.Name("country"));
+        var selectcountry = new SelectElement(countrydropdown);
+        selectcountry.SelectByText("United States");
+
+        submit = driver.FindElement(By.XPath("//*[contains(text(),'Submit')]"));
+        submit.Click();
+
+        var success = driver.FindElement(By.CssSelector(".success-msg"));
+        Assert.IsTrue(success.Text.Contains("Thanks for contacting us, we will get back to you shortly."));
         }
 
         [TearDown]
